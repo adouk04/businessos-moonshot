@@ -82,24 +82,27 @@ Run `typecheck`, `lint`, `test` before every commit; run `test:e2e` after UI/rou
 
 ## Current status (update every session)
 
-Last updated: 2026-11-15 (Session 1, Milestone 1 in progress)
+Last updated: 2026-11-15 (Session 1, Milestone 1 complete)
 
 | Area | Status |
 |---|---|
 | Docs (PRD, ARCHITECTURE, ROADMAP, DECISIONS, DEVLOG) | Implemented |
 | Next.js scaffold, Tailwind, shadcn/ui, Recharts, Lucide | Implemented |
-| App shell: sidebar, mobile nav, theme toggle, loading/error | Implemented (verified earlier by e2e + screenshots) |
-| Zod schemas + validation tests (auth, business) | Implemented, unit tested |
-| `src/lib/money.ts` | Implemented + unit tested |
-| Auth (login/register/logout), onboarding, `proxy.ts`, `requireBusiness()`, landing page | **Code written, NOT verified**: needs a live Supabase project |
-| Database schema / RLS (`0001_initial_schema.sql`) | **Drafted, not applied, not tested** |
-| RLS isolation tests (`rls.integration.test.ts`) | **Written, skipped** until Supabase keys are in `.env.local` |
-| Auth/navigation e2e | **Written, not run** (need Supabase) |
+| App shell: sidebar, mobile nav, theme toggle, loading/error | Implemented, e2e verified |
+| Auth: register, login, logout, `proxy.ts`, `requireBusiness()` | **Implemented, verified** (Vitest + Playwright, live Supabase) |
+| Business onboarding (`create_business` RPC), landing page | **Implemented, verified** |
+| Database schema + RLS (`0001_initial_schema.sql`) | **Applied to the hosted dev project; isolation verified** by 11 integration tests |
+| Zod schemas (auth, business), `src/lib/money.ts` | Implemented, unit tested |
 | Module pages (customers, appointments, services, finances, intelligence/*, settings) | **Scaffolded**: placeholders only |
 | Dashboard | **Scaffolded**: KPI cards show "—" |
-| All business modules and intelligence features | **Planned** |
+| All business modules and intelligence features | **Planned** (Milestones 2-3) |
+| Seed data, security review | **Planned** (Milestone 4) |
 | Deployment | **Not done** |
 
-Tests last run: Vitest 12 passed / 11 skipped (live-DB tests); typecheck and lint clean. Playwright and RLS tests have not run since auth was added.
+Tests last run 2026-11-15: typecheck, lint pass; Vitest 23/23 (incl. live-DB RLS tests); build pass; Playwright 18/18 (desktop + mobile).
 
-**Next task:** once `.env.local` has the Supabase URL, anon key and service-role key and migration 0001 is applied: run `npm test` (RLS tests must un-skip and pass), `npm run build`, `npm run test:e2e`; fix failures; then check off Milestone 1 in ROADMAP. Do not start Milestone 2 until Milestone 1 is verified.
+Environment: hosted Supabase dev project; `.env.local` holds URL, anon key, service-role key (service-role is used only by integration tests and e2e teardown). Email confirmation is OFF. Tests create and delete `rls-*` / `e2e-*@example.test` users.
+
+Gotchas: avoid bash heredocs containing apostrophes (the shell tool fails to parse them); write files with the file tool. shadcn `Button` with `render={<Link/>}` produces `role="button"`; use `buttonVariants` on a `Link` for navigation.
+
+**Next task:** Milestone 2 (operations), starting with the appointment-status domain logic and services/customers CRUD. Every page that queries data must call `requireBusiness()` itself and take `business_id` from it, never from the client.

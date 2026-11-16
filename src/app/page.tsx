@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, FlaskConical, Lightbulb, SlidersHorizontal } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { brand } from "@/config/nav";
 
 const features = [
@@ -21,9 +21,9 @@ export default function LandingPage() {
           </span>
           {brand.name}
         </span>
-        <Button variant="ghost" render={<Link href="/login" />} nativeButton={false}>
+        <Link href="/login" className={buttonVariants({ variant: "ghost" })}>
           Sign in
-        </Button>
+        </Link>
       </header>
 
       <section className="flex flex-1 flex-col items-center justify-center gap-6 py-16 text-center">
@@ -31,9 +31,9 @@ export default function LandingPage() {
         <p className="max-w-xl text-lg text-muted-foreground">
           Run your appointments, customers, and finances in one place, and get clear help deciding what to do next.
         </p>
-        <Button size="lg" render={<Link href="/register" />} nativeButton={false}>
+        <Link href="/register" className={buttonVariants({ size: "lg" })}>
           Get started <ArrowRight className="size-4" aria-hidden />
-        </Button>
+        </Link>
         <ul className="mt-10 grid gap-4 text-left sm:grid-cols-3">
           {features.map((f) => (
             <li key={f.title} className="space-y-2 rounded-xl border p-5">

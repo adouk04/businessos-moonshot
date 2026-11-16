@@ -67,3 +67,27 @@ Chronological. Newest entries at the bottom. Each entry: work completed, decisio
 - Owner creates the Supabase project, runs migration 0001 in the SQL editor, disables email confirmation, and puts the URL, anon key and service-role key in `.env.local`.
 - Then: run the integration tests and e2e, fix what breaks, mark Milestone 1 items done in ROADMAP.
 
+---
+
+## 2026-11-15: Session 1 (cont.): Milestone 1 verified against live Supabase
+
+**Setup:** owner created the hosted Supabase project, ran migration 0001 in the SQL editor, disabled email confirmation, and saved keys in `.env.local` (git-ignored; first save was an empty file, fixed by the owner).
+
+**Problems found by running the tests (and fixed)**
+- **Accessibility bug:** `<Button render={<Link/>} nativeButton={false}>` rendered the landing-page links with `role="button"`, so they were not exposed as links. Replaced with `<Link className={buttonVariants(...)}>`. Lesson: with Base UI buttons, use `buttonVariants` on a real `Link` for navigation.
+- Test bug: `getByRole("alert")` also matched Next's route announcer; scoped to `form [role=alert]`.
+
+**Tests performed (run, results observed)**
+- `npm run typecheck`, `npm run lint`: pass
+- `npm test`: 3 files, **23 passed**, 0 skipped, including all 11 live-DB isolation tests (cross-tenant read/insert/update/delete/move denied, composite FK rejects cross-tenant link, duplicate sale rejected by unique index, expense with appointment/customer rejected, non-positive amounts rejected, direct inserts into businesses/business_members denied, anonymous sees nothing)
+- `npm run build`: pass; proxy registered; app routes use partial prerender
+- `npx playwright test`: **18 passed** (desktop + mobile): landing, signed-out redirects, validation messages, generic bad-credentials message, register -> onboard -> dashboard -> sign out -> sign in, no-business users blocked from the app, no fabricated dashboard numbers, navigation to all modules
+- Verified the test teardown leaves no data behind: 0 users and 0 businesses remained in the project afterward.
+
+**Not tested / known gaps**
+- Multi-business-per-user and staff role behavior (schema supports it; no UI or tests yet).
+- Email-confirmation-on path of sign-up (code handles it; untested).
+- DB types are hand-typed; generate them with the Supabase CLI later.
+
+**Next steps:** Milestone 2 (operations): appointment status transitions domain + tests, services CRUD, customers CRUD, appointments, transactions, finance metrics, dashboard.
+

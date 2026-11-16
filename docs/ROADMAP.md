@@ -17,13 +17,14 @@ Today at time of writing: Nov 15, 2026 (22 days to demo). Check items off only w
 ## Milestone 1: Foundation: auth, database, onboarding (target Nov 16-21)
 - [x] Owner decisions: hosted Supabase, email confirmation off, free tiers OK (DECISIONS: Resolved decisions)
 - [x] Read Next docs on authentication + cache components
-- [ ] Create Supabase project; apply migration 0001; generate DB types
+- [x] Create Supabase project; apply migration 0001
+- [ ] Generate DB types (currently hand-typed in `session.ts`)
 - [x] Install `@supabase/ssr`, `@supabase/supabase-js`, `zod`; env handling + `.env.example`
-- [~] Register / login / logout pages and server actions (Zod-validated) *(code written; unverified until Supabase is connected)*
-- [~] `proxy.ts` optimistic redirect; `requireBusiness()` authorization choke point *(code written; unverified until Supabase is connected)*
-- [~] Onboarding: create business via `create_business()` RPC *(code written; unverified until Supabase is connected)*
-- [~] Landing page for signed-out users *(code written; unverified until Supabase is connected)*
-- [~] **Tests** *(written; form validation passing, the rest awaiting live Supabase)*: RLS isolation (two tenants, every table), composite FK rejection, form validation, e2e sign-up → onboarding → dashboard
+- [x] Register / login / logout pages and server actions (Zod-validated)
+- [x] `proxy.ts` optimistic redirect; `requireBusiness()` authorization choke point
+- [x] Onboarding: create business via `create_business()` RPC
+- [x] Landing page for signed-out users
+- [x] **Tests:** RLS isolation (two tenants, every table), composite FK rejection, form validation, e2e sign-up → onboarding → dashboard
 - [ ] Update CLAUDE.md status + DEVLOG
 
 ## Milestone 2: Operations (target Nov 22-30; Thanksgiving Nov 26)

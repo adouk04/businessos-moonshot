@@ -30,7 +30,7 @@ test("login rejects bad credentials with a generic message", async ({ page }) =>
   await page.getByLabel("Email").fill(uniqueEmail("ghost"));
   await page.getByLabel("Password").fill("whatever-123");
   await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page.getByRole("alert")).toHaveText("Invalid email or password.");
+  await expect(page.locator("form [role=alert]")).toHaveText("Invalid email or password.");
 });
 
 test("register -> onboard -> dashboard -> sign out -> sign in", async ({ page }) => {
