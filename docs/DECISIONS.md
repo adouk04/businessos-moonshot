@@ -61,7 +61,7 @@ Format: **Context → Decision → Consequences.** Add new ADRs at the bottom; n
 | 5 | Sparse data makes inactivity detection noisy | High (new businesses) / Low | Minimum-history rule + configurable fallback + visible explanation; seeded demo data |
 | 6 | Hosting limits: Vercel Hobby is non-commercial; Supabase free projects pause when idle | Medium / Medium (post-course) | Fine for coursework; upgrading to paid plans needs the owner's approval before any commercial launch |
 | 7 | Duplicate sales on repeated completion | Low / High | Status change never writes sales + DB partial unique index + test |
-| 8 | Secret leakage (service-role key) | Low / Critical | Server-only env, `.env.example` only, no service role in request path |
+| 8 | Secret leakage (service-role key) | Low / Critical | Server-only env, only `.env.local` (git-ignored), no service role in request path |
 | 9 | Tooling/security advisories in dev dependencies | Low / Low | Tracked in ADR-008; dev-only |
 | 10 | AI creeping into calculations | Low / High | Hard rule in CLAUDE.md and ARCHITECTURE §5.8 |
 

@@ -19,7 +19,7 @@ Today at time of writing: Nov 15, 2026 (22 days to demo). Check items off only w
 - [x] Read Next docs on authentication + cache components
 - [x] Create Supabase project; apply migration 0001
 - [ ] Generate DB types (currently hand-typed in `session.ts`)
-- [x] Install `@supabase/ssr`, `@supabase/supabase-js`, `zod`; env handling + `.env.example`
+- [x] Install `@supabase/ssr`, `@supabase/supabase-js`, `zod`; env handling (variables documented in README)
 - [x] Register / login / logout pages and server actions (Zod-validated)
 - [x] `proxy.ts` optimistic redirect; `requireBusiness()` authorization choke point
 - [x] Onboarding: create business via `create_business()` RPC

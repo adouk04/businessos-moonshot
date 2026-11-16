@@ -91,3 +91,11 @@ Chronological. Newest entries at the bottom. Each entry: work completed, decisio
 
 **Next steps:** Milestone 2 (operations): appointment status transitions domain + tests, services CRUD, customers CRUD, appointments, transactions, finance metrics, dashboard.
 
+---
+
+## 2026-11-15: Session 1 (cont.): Made repo public; removed `.env.example`
+
+- Scanned all files and full git history for secrets before making the repo public: none found (the Supabase project URL was never committed).
+- Repo visibility set to public so the portfolio link works for reviewers.
+- At the owner's request, removed `.env.example`. The required variable names are now documented in README.md. Nothing else changes: `.env.local` stays git-ignored.
+

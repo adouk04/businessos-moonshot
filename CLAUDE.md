@@ -67,7 +67,7 @@ Run `typecheck`, `lint`, `test` before every commit; run `test:e2e` after UI/rou
 ## Security requirements
 
 - Server-side authorization on every data access (`requireBusiness()` pattern); RLS as second layer; `proxy.ts` is only an optimistic redirect.
-- Secrets only in `.env.local` (git-ignored); document names in `.env.example`. Service-role key is server-only and not used in user request paths. Never prefix secrets with `NEXT_PUBLIC_`.
+- Secrets only in `.env.local` (git-ignored); document variable names in README.md (there is no `.env.example`). Service-role key is server-only and not used in user request paths. Never prefix secrets with `NEXT_PUBLIC_`.
 - User-safe error messages; no stack traces/SQL to clients.
 - Do not contact customers automatically. Do not deploy publicly, enable paid services, or create cloud projects without the owner's explicit approval.
 

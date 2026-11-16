@@ -88,7 +88,7 @@ Defense in depth, in this order:
 6. **Validation:** Zod on every external input (forms, query params, route handlers).
 7. **Errors:** user-safe messages; no stack traces or SQL to the client.
 8. **AI boundary:** AI (stretch) receives computed, aggregate figures and returns prose. It never writes SQL, never calculates, never gets raw rows beyond what the owner is already viewing.
-9. **Secrets:** `.env.local` only, `.env.example` documents names; `.gitignore` excludes real env files.
+9. **Secrets:** `.env.local` only, variable names documented in README.md; `.gitignore` excludes real env files.
 
 **Authorization test plan:** integration tests create two users/businesses and assert user A gets zero rows and failed writes against B's data on every table, plus cross-tenant FK insertion failure.
 
