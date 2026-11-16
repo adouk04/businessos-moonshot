@@ -1,21 +1,17 @@
 import { expect, test } from "@playwright/test";
+import { registerAndOnboard } from "./helpers";
 
-// Scaffold smoke tests. Auth-gated flows are added in Phase 1.
-
-test("root redirects to the dashboard", async ({ page }) => {
-  await page.goto("/");
-  await expect(page).toHaveURL(/\/dashboard$/);
-  await expect(page.getByRole("heading", { name: "Dashboard", level: 1 })).toBeVisible();
-});
+// Navigation smoke tests for the authenticated shell.
 
 test("dashboard shows no fabricated numbers", async ({ page }) => {
-  await page.goto("/dashboard");
+  await registerAndOnboard(page, "dash");
+  await expect(page.getByRole("heading", { name: "Dashboard", level: 1 })).toBeVisible();
   await expect(page.getByText("Total revenue")).toBeVisible();
   await expect(page.getByText("—")).toHaveCount(6);
 });
 
 test("navigation reaches every module", async ({ page, isMobile }) => {
-  await page.goto("/dashboard");
+  await registerAndOnboard(page, "nav");
   const targets: [string, RegExp][] = [
     ["Customers", /\/customers$/],
     ["Appointments", /\/appointments$/],

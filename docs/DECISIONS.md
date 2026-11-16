@@ -65,7 +65,14 @@ Format: **Context → Decision → Consequences.** Add new ADRs at the bottom; n
 | 9 | Tooling/security advisories in dev dependencies | Low / Low | Tracked in ADR-008; dev-only |
 | 10 | AI creeping into calculations | Low / High | Hard rule in CLAUDE.md and ARCHITECTURE §5.8 |
 
-## Open decisions (need owner input before / during Phase 1)
-1. **RLS test environment:** Supabase CLI + Docker locally, or a separate hosted test project?
-2. **Email confirmation:** require email confirmation at sign-up (more secure, more friction in demo) or disable for the demo project?
-3. **Deployment approval:** confirm when it's OK to create the Vercel/Supabase projects (free tiers).
+## Resolved decisions (2026-11-15, owner)
+1. **RLS test environment:** hosted Supabase project (owner creates it and provides keys); no Docker. Integration tests create and delete throwaway users with the service-role key, which is used **only** in tests and e2e teardown, never in the app. Consequence: tests write to the real dev project, so they only touch accounts named `rls-*` / `e2e-*@example.test` and clean up after themselves.
+2. **Email confirmation:** OFF for the demo project (Supabase Auth settings). The sign-up action still handles the confirmation-required case. Turn it back on before any real launch.
+3. **Cloud projects:** free-tier Supabase and Vercel projects are approved. The owner creates the Supabase project; deployment to Vercel is still confirmed with the owner at release time.
+
+## ADR-010: Phase 1 auth design (2026-11-15)
+- `@supabase/ssr` cookie sessions. `src/proxy.ts` refreshes the session with `getClaims()` and does optimistic redirects only.
+- `getUser()` in `src/server/auth/session.ts` verifies with the Auth server; `requireBusiness()` resolves the business from `business_members` and is called by the `(app)` layout. Pages that run queries must also call it themselves (layouts do not re-run on every navigation).
+- Under `cacheComponents`, session reads sit behind `<Suspense>` (layout `Gate`, onboarding `Gate`).
+- Sign-in returns one generic error for wrong password or unknown email. Sign-up maps known error codes to friendly messages and logs only the error code.
+- Onboarding uses the `create_business()` security-definer RPC, so business and owner membership are created atomically; direct inserts into `businesses` / `business_members` are denied by RLS.

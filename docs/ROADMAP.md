@@ -1,7 +1,7 @@
 # BusinessOS: Roadmap
 
 Key dates: **Dec 7, 2026**: working MVP demo · **Dec 13, 2026**: final submission · after Dec 13: continued product development.
-Today at time of writing: Nov 15, 2026 (22 days to demo). Check items off only when **implemented and verified**.
+Today at time of writing: Nov 15, 2026 (22 days to demo). Check items off only when **implemented and verified**. `[~]` = code written but not yet verified.
 
 **Priority rule:** if time is short, ship one complete, tested, deployed workflow (auth → customers/services → appointment → sale → dashboard) before any intelligence feature. Never cut auth, data isolation, or financial correctness.
 
@@ -15,15 +15,15 @@ Today at time of writing: Nov 15, 2026 (22 days to demo). Check items off only w
 - [x] Git repository initialized and committed
 
 ## Milestone 1: Foundation: auth, database, onboarding (target Nov 16-21)
-- [ ] Owner decisions: RLS test environment, email confirmation, project creation (see DECISIONS "Open decisions")
-- [ ] Read Next docs on authentication + cache components; spike login with `@supabase/ssr`
+- [x] Owner decisions: hosted Supabase, email confirmation off, free tiers OK (DECISIONS: Resolved decisions)
+- [x] Read Next docs on authentication + cache components
 - [ ] Create Supabase project; apply migration 0001; generate DB types
-- [ ] Install `@supabase/ssr`, `@supabase/supabase-js`, `zod`; env handling + `.env.example`
-- [ ] Register / login / logout pages and server actions (Zod-validated)
-- [ ] `proxy.ts` optimistic redirect; `requireBusiness()` authorization choke point
-- [ ] Onboarding: create business via `create_business()` RPC
-- [ ] Landing page for signed-out users
-- [ ] **Tests:** RLS isolation (two tenants, every table), composite FK rejection, form validation, e2e sign-up → onboarding → dashboard
+- [x] Install `@supabase/ssr`, `@supabase/supabase-js`, `zod`; env handling + `.env.example`
+- [~] Register / login / logout pages and server actions (Zod-validated) *(code written; unverified until Supabase is connected)*
+- [~] `proxy.ts` optimistic redirect; `requireBusiness()` authorization choke point *(code written; unverified until Supabase is connected)*
+- [~] Onboarding: create business via `create_business()` RPC *(code written; unverified until Supabase is connected)*
+- [~] Landing page for signed-out users *(code written; unverified until Supabase is connected)*
+- [~] **Tests** *(written; form validation passing, the rest awaiting live Supabase)*: RLS isolation (two tenants, every table), composite FK rejection, form validation, e2e sign-up → onboarding → dashboard
 - [ ] Update CLAUDE.md status + DEVLOG
 
 ## Milestone 2: Operations (target Nov 22-30; Thanksgiving Nov 26)

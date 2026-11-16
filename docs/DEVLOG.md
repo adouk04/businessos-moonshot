@@ -39,3 +39,31 @@ Chronological. Newest entries at the bottom. Each entry: work completed, decisio
 **Next steps**
 - Get owner decisions on the three open items in DECISIONS.md.
 - Phase 1: Supabase project, apply migration, auth, onboarding, RLS tests.
+
+---
+
+## 2026-11-15: Session 1 (cont.): Milestone 1 code, pending live verification
+
+**Owner decisions received:** hosted Supabase project (owner creates it and supplies keys), email confirmation off for the demo, free-tier Supabase/Vercel approved. Recorded in DECISIONS.md (resolved decisions + ADR-010).
+
+**Work completed (code written; NOT yet run against a live Supabase project)**
+- Installed `zod`, `@supabase/supabase-js`, `@supabase/ssr`, `server-only`; added shadcn `input`, `label`.
+- `src/lib/supabase/{env,server,proxy}.ts`, `src/proxy.ts` (session refresh + optimistic redirects).
+- `src/server/auth/session.ts`: `getUser`, `requireUser`, `getBusinessContext`, `requireBusiness`.
+- Server actions: `signUp`, `signIn`, `signOut`, `createBusiness` (RPC). Zod schemas in `src/schemas/`.
+- UI: landing page, `/login`, `/register`, `/onboarding`, authenticated layout with business name + sign-out.
+- Tests written: `src/schemas/auth.test.ts` (validation), `src/server/db/rls.integration.test.ts` (11 isolation/constraint tests against a live DB, skipped without keys), Playwright `e2e/auth.spec.ts` and updated `e2e/navigation.spec.ts` (sign up real users; teardown deletes them).
+
+**Problems encountered**
+- Repeated bash-heredoc failures caused by apostrophes in file text; switched to the file-writing tool for source and doc files.
+- The earlier navigation e2e test no longer applied because every app route now requires sign-in; it was rewritten to register a user first.
+
+**Tests performed (run, results observed)**
+- `npm run typecheck`: pass. `npm run lint`: pass.
+- `npm test`: 12 passed, 11 skipped (the skipped ones are the live-DB isolation tests, so **isolation is still unverified**).
+- **Not yet run:** `npm run build` with auth, Playwright e2e, RLS integration tests, the SQL migration (all need the Supabase project).
+
+**Next steps**
+- Owner creates the Supabase project, runs migration 0001 in the SQL editor, disables email confirmation, and puts the URL, anon key and service-role key in `.env.local`.
+- Then: run the integration tests and e2e, fix what breaks, mark Milestone 1 items done in ROADMAP.
+

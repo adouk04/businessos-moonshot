@@ -82,21 +82,24 @@ Run `typecheck`, `lint`, `test` before every commit; run `test:e2e` after UI/rou
 
 ## Current status (update every session)
 
-Last updated: 2026-11-15 (end of Session 1)
+Last updated: 2026-11-15 (Session 1, Milestone 1 in progress)
 
 | Area | Status |
 |---|---|
 | Docs (PRD, ARCHITECTURE, ROADMAP, DECISIONS, DEVLOG) | Implemented |
 | Next.js scaffold, Tailwind, shadcn/ui, Recharts, Lucide | Implemented |
-| App shell: sidebar, mobile nav, theme toggle, loading/error | Implemented (verified by e2e + screenshots) |
-| Module pages (customers, appointments, services, finances, intelligence/*, settings) | **Scaffolded**: placeholders only, no behavior |
-| Dashboard | **Scaffolded**: KPI cards show "—"; no metrics yet |
+| App shell: sidebar, mobile nav, theme toggle, loading/error | Implemented (verified earlier by e2e + screenshots) |
+| Zod schemas + validation tests (auth, business) | Implemented, unit tested |
 | `src/lib/money.ts` | Implemented + unit tested |
-| Database schema / RLS | **Drafted, not applied, not tested**: `supabase/migrations/0001_initial_schema.sql` |
-| Supabase project, auth, onboarding | **Planned** (Milestone 1) |
+| Auth (login/register/logout), onboarding, `proxy.ts`, `requireBusiness()`, landing page | **Code written, NOT verified**: needs a live Supabase project |
+| Database schema / RLS (`0001_initial_schema.sql`) | **Drafted, not applied, not tested** |
+| RLS isolation tests (`rls.integration.test.ts`) | **Written, skipped** until Supabase keys are in `.env.local` |
+| Auth/navigation e2e | **Written, not run** (need Supabase) |
+| Module pages (customers, appointments, services, finances, intelligence/*, settings) | **Scaffolded**: placeholders only |
+| Dashboard | **Scaffolded**: KPI cards show "—" |
 | All business modules and intelligence features | **Planned** |
-| Deployment | **Not done** (needs owner approval) |
+| Deployment | **Not done** |
 
-Tests: Vitest: 5 tests (money); Playwright: 6 tests (nav smoke, desktop + mobile). Last run: all passing on 2026-11-15.
+Tests last run: Vitest 12 passed / 11 skipped (live-DB tests); typecheck and lint clean. Playwright and RLS tests have not run since auth was added.
 
-**Next task:** Milestone 1 (Phase 1): resolve the open decisions in `docs/DECISIONS.md`, then Supabase + auth + onboarding + RLS tests. **Wait for the owner's approval before starting.**
+**Next task:** once `.env.local` has the Supabase URL, anon key and service-role key and migration 0001 is applied: run `npm test` (RLS tests must un-skip and pass), `npm run build`, `npm run test:e2e`; fix failures; then check off Milestone 1 in ROADMAP. Do not start Milestone 2 until Milestone 1 is verified.
